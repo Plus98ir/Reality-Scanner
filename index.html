@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reality Scanner</title>
+<meta name="description" content="Finds good Xray REALITY targets (dest / serverNames) next to your server and checks they are open on your own internet. Loads and updates 3x-ui inbounds. Windows + Android.">
+<meta property="og:title" content="Reality Scanner">
+<meta property="og:description" content="Find REALITY dest / SNI targets next to your server — open on your own internet.">
+<meta property="og:image" content="https://plus98ir.dpdns.org/Reality-Scanner/Reality-Scanner.png">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icon.png">
+<style>
+:root {
+  --bg: #0b0b12; --card: #15141f; --card2: #1b1a28; --text: #ebe9f3; --muted: #a09cb3; --line: #2a2838;
+  --accent: #7c5cff; --accent2: #b5a3ff; --accent-ink: #ffffff; --ok: #4ade80; --bad: #f87171;
+}
+@media (prefers-color-scheme: light) {
+  :root { --bg: #f5f4fa; --card: #ffffff; --card2: #f6f5fb; --text: #1c1a26; --muted: #5f5b70; --line: #dedbe9;
+          --accent: #6d4aff; --accent2: #5a37e6; --accent-ink: #ffffff; --ok: #15803d; --bad: #b91c1c; }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.7 "Segoe UI", system-ui, -apple-system, Roboto, sans-serif; }
+html[lang="fa"] body { font-family: Vazirmatn, "Segoe UI", Tahoma, sans-serif; line-height: 1.9; }
+a { color: var(--accent2); }
+code { background: var(--card2); border: 1px solid var(--line); padding: 1px 6px; border-radius: 5px; font-family: Consolas, Menlo, monospace; font-size: 13px; direction: ltr; unicode-bidi: isolate; }
+header { display: flex; align-items: center; gap: 12px; padding: 14px 32px; border-bottom: 1px solid var(--line); background: color-mix(in srgb, var(--card) 88%, transparent); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 5; }
+.logo { width: 34px; height: 34px; display: block; }
+header b { font-size: 17px; }
+.spacer { flex: 1; }
+.nav { display: flex; gap: 18px; }
+.nav a { color: var(--muted); text-decoration: none; font-size: 14px; }
+.nav a:hover { color: var(--text); }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.seg button { border: 0; background: transparent; color: var(--text); padding: 6px 12px; cursor: pointer; font: inherit; }
+.seg button.on { background: var(--accent); color: var(--accent-ink); }
+.gh { color: var(--text); text-decoration: none; border: 1px solid var(--line); border-radius: 8px; padding: 5px 12px; }
+main { width: 100%; padding: 24px 32px 40px; }
+.hero { position: relative; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 8fr); gap: 48px; align-items: center; padding: 28px 0 36px; }
+.hero::before { content: ""; position: absolute; inset: -40px -32px auto; height: 520px; z-index: -1; pointer-events: none;
+  background: radial-gradient(500px 340px at 15% 30%, rgba(124,92,255,.20), transparent 70%), radial-gradient(600px 400px at 85% 40%, rgba(80,200,255,.10), transparent 70%); }
+.badge { display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); background: var(--card); border-radius: 99px; padding: 4px 12px; font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+.badge i { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 10px var(--ok); }
+.hero h1 { font-size: clamp(32px, 4vw, 56px); line-height: 1.15; margin: 0 0 16px; }
+.hero h1 span { background: linear-gradient(90deg, var(--accent), var(--accent2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero p { color: var(--muted); font-size: 17px; margin: 0 0 24px; }
+.btns { display: flex; flex-wrap: wrap; gap: 10px; }
+.btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; border-radius: 10px; text-decoration: none; font-weight: 600; border: 1px solid var(--line); color: var(--text); background: var(--card); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn:hover { border-color: var(--accent2); }
+.small { font-size: 13px; color: var(--muted); margin-top: 12px; }
+.heroimg { width: 100%; height: auto; display: block; border-radius: 16px; border: 1px solid var(--line); box-shadow: 0 30px 80px rgba(0,0,0,.45); }
+.stats { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; margin-top: 8px; }
+.stat { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px 18px; }
+.stat b { display: block; font-size: 26px; line-height: 1.2; background: linear-gradient(90deg, var(--accent), var(--accent2)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.stat span { color: var(--muted); font-size: 13px; }
+section { margin-top: 48px; }
+h2 { font-size: 26px; margin: 0 0 6px; }
+.lead { color: var(--muted); margin: 0 0 18px; }
+.grid { display: grid; gap: 16px; }
+.grid.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.grid.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px; }
+.card h3 { margin: 0 0 6px; font-size: 16px; }
+.card p { margin: 0; color: var(--muted); }
+.num { display: inline-grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--accent); color: var(--accent-ink); font-weight: 700; font-size: 14px; margin-bottom: 8px; }
+.ico { font-size: 22px; margin-bottom: 6px; }
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+ol.steps { margin: 0; padding-inline-start: 22px; }
+ol.steps li { margin: 6px 0; }
+pre.cmd { direction: ltr; text-align: left; background: var(--card2); border: 1px solid var(--line); border-radius: 8px; padding: 10px 14px; white-space: pre-wrap; overflow-wrap: anywhere; font: 12.5px/1.7 Consolas, Menlo, monospace; margin: 10px 0 0; }
+.note { background: var(--card2); border-inline-start: 3px solid var(--accent); border-radius: 8px; padding: 10px 14px; color: var(--muted); margin-top: 12px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { padding: 8px 10px; border-bottom: 1px solid var(--line); text-align: start; }
+th { color: var(--muted); font-weight: 600; }
+td b { color: var(--accent2); }
+.tablewrap { overflow-x: auto; }
+footer { border-top: 1px solid var(--line); padding: 18px 32px; color: var(--muted); font-size: 13px; display: flex; flex-wrap: wrap; gap: 8px 20px; }
+[data-l] { display: none; }
+html[lang="fa"] [data-l="fa"], html[lang="en"] [data-l="en"] { display: revert; }
+html:not([lang="fa"]) [data-l="fa"], html:not([lang="en"]) [data-l="en"] { display: none !important; }
+@media (max-width: 1200px) {
+  .stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .grid.four { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .nav { display: none; }
+}
+@media (max-width: 960px) {
+  .hero { grid-template-columns: 1fr; gap: 24px; padding-top: 8px; }
+  .cols { grid-template-columns: 1fr; }
+  .grid.three { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  header { padding: 10px 16px; gap: 8px; }
+  header b { font-size: 15px; }
+  .gh { display: none; }
+  main { padding: 16px 16px 32px; }
+  footer { padding: 16px; }
+  .btn { flex: 1 1 auto; justify-content: center; }
+  .hero p { font-size: 15.5px; }
+  .stats { grid-template-columns: 1fr 1fr; }
+  .stat b { font-size: 22px; }
+  .grid.three, .grid.four { grid-template-columns: 1fr; }
+  th, td { padding: 6px; font-size: 13px; }
+}
+</style>
+<script>window.goatcounter={path:function(){return "/"+location.pathname.split("/")[1]+"/"}};</script>
+<script data-goatcounter="https://plus98.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+<header>
+  <img class="logo" src="icon.svg" alt="" width="34" height="34">
+  <b>Reality Scanner</b>
+  <div class="spacer"></div>
+  <nav class="nav">
+    <a href="#how"><span data-l="fa">چطور کار می‌کند</span><span data-l="en">How it works</span></a>
+    <a href="#features"><span data-l="fa">امکانات</span><span data-l="en">Features</span></a>
+    <a href="#panels"><span data-l="fa">پنل‌ها</span><span data-l="en">Panels</span></a>
+    <a href="#run"><span data-l="fa">نصب و اجرا</span><span data-l="en">Install</span></a>
+  </nav>
+  <a class="gh" href="https://github.com/Plus98ir/Reality-Scanner">GitHub</a>
+  <div class="seg" role="group" aria-label="Language">
+    <button data-lang="en">EN</button><button data-lang="fa">فا</button>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <div>
+      <div class="badge"><i></i><span data-l="fa">تست روی اینترنت خود شما، نه یک سرور خارجی</span><span data-l="en">Tested on your own internet, not a remote server</span></div>
+      <h1 data-l="fa">مقصد مناسب REALITY، <span>کنار سرور خودتان</span></h1>
+      <h1 data-l="en">The right REALITY target, <span>next to your own server</span></h1>
+      <p data-l="fa">Reality Scanner سایت‌های کنار سرور Xray شما را پیدا می‌کند، هر کدام را مثل خود Xray چک می‌کند (TLS 1.3، X25519، HTTP/2، گواهی معتبر) و می‌سنجد که اپراتور شما SNI آن را قطع نمی‌کند. بهترین‌ها را امتیاز می‌دهد و با یک کلیک در inbound پنل 3x-ui می‌نشاند.</p>
+      <p data-l="en">Reality Scanner finds the sites next to your Xray server, checks each one the way Xray does (TLS 1.3, X25519, HTTP/2, a valid certificate) and tests that your ISP doesn't cut its SNI. It scores the best ones and puts your pick into a 3x-ui inbound in one click.</p>
+      <div class="btns">
+        <a class="btn primary" href="https://github.com/Plus98ir/Reality-Scanner/releases/latest/download/Reality-Scanner.exe">
+          ⬇ <span data-l="fa">ویندوز (exe)</span><span data-l="en">Windows (exe)</span></a>
+        <a class="btn primary" href="https://github.com/Plus98ir/Reality-Scanner/releases/latest/download/Reality-Scanner.apk">
+          ⬇ <span data-l="fa">اندروید (APK)</span><span data-l="en">Android (APK)</span></a>
+        <a class="btn" href="#run"><span data-l="fa">نحوهٔ اجرا</span><span data-l="en">How to run</span></a>
+      </div>
+      <div class="small" data-l="fa">ویندوز و اندروید · بدون نیاز به نصب چیز دیگری · آپدیت خودکار · روی دستگاه خودتان اجرا می‌شود.</div>
+      <div class="small" data-l="en">Windows and Android · nothing else to install · update check · runs on your own device.</div>
+    </div>
+    <div>
+      <img class="heroimg" data-l="fa" src="img/scan-fa.png" alt="نتیجهٔ اسکن Reality Scanner" width="1368" height="850">
+      <img class="heroimg" data-l="en" src="img/scan-en.png" alt="Reality Scanner scan results" width="1368" height="850">
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b>TLS 1.3</b><span data-l="fa">همراه X25519 و HTTP/2، مثل Xray</span><span data-l="en">with X25519 and HTTP/2, like Xray</span></div>
+    <div class="stat"><b>SNI</b><span data-l="fa">تست فیلتر از اینترنت خود شما</span><span data-l="en">filter test from your own internet</span></div>
+    <div class="stat"><b><bdi dir="ltr">/24</bdi></b><span data-l="fa">همسایه‌های سرور، بعد همان AS</span><span data-l="en">the server's neighbours, then its AS</span></div>
+    <div class="stat"><b><bdi dir="ltr">0–100</bdi></b><span data-l="fa">امتیاز برای هر مقصد</span><span data-l="en">score for every target</span></div>
+    <div class="stat"><b>3x-ui</b><span data-l="fa">اعمال روی inbound با Undo</span><span data-l="en">apply to the inbound, with undo</span></div>
+  </div>
+
+  <section id="how">
+    <h2 data-l="fa">چطور کار می‌کند</h2>
+    <h2 data-l="en">How it works</h2>
+    <p class="lead" data-l="fa">IP سرور و پورت REALITY را بدهید (یا inbound را از پنل بخوانید) و «شروع اسکن» را بزنید.</p>
+    <p class="lead" data-l="en">Give it your server's IP and REALITY port (or load the inbound from your panel) and press Start scan.</p>
+    <div class="grid four">
+      <div class="card"><div class="num">1</div>
+        <h3 data-l="fa">پیدا کردن همسایه‌ها</h3><h3 data-l="en">Find the neighbours</h3>
+        <p data-l="fa">IPهای کنار سرور (همان <bdi dir="ltr">/24</bdi>، بعد شبکهٔ همان AS) را می‌گردد، گواهی هر کدام را می‌خواند و اسم سایت‌ها را درمی‌آورد. می‌توانید لیست دامنهٔ خودتان را هم بدهید.</p>
+        <p data-l="en">It walks the IPs next to your server (same /24, then the rest of its AS), reads each certificate and takes the site names from it. You can also give it your own domain list.</p></div>
+      <div class="card"><div class="num">2</div>
+        <h3 data-l="fa">چک مثل Xray</h3><h3 data-l="en">Check it like Xray</h3>
+        <p data-l="fa">هر اسم باید TLS 1.3، HTTP/2، گواهی معتبر برای همان اسم و یک ClientHello فقط با X25519 را قبول کند؛ وگرنه REALITY با آن کار نمی‌کند.</p>
+        <p data-l="en">Each name must take TLS 1.3, HTTP/2, a valid certificate for that name and a ClientHello offering only X25519, or REALITY won't work with it.</p></div>
+      <div class="card"><div class="num">3</div>
+        <h3 data-l="fa">تست فیلتر</h3><h3 data-l="en">Filter test</h3>
+        <p data-l="fa">اسم را به‌عنوان SNI از اینترنت شما به سرور خودتان می‌فرستد. اگر اپراتور قطعش کند، «فیلتر» علامت می‌خورد. SNI router جلوی پورت را هم تشخیص می‌دهد.</p>
+        <p data-l="en">It sends the name as SNI from your internet to your own server. If your ISP cuts it, it's marked filtered. It also spots an SNI router sitting in front of the port.</p></div>
+      <div class="card"><div class="num">4</div>
+        <h3 data-l="fa">امتیاز و استفاده</h3><h3 data-l="en">Score and use</h3>
+        <p data-l="fa">باز بودن، همان <bdi dir="ltr">/24</bdi> یا AS، CDN نبودن، DNS درست و سرعت هندشیک امتیاز می‌گیرند. <code>realitySettings</code> آماده را کپی کنید یا مستقیم در پنل اعمال کنید.</p>
+        <p data-l="en">Open here, same /24 or AS, not a CDN, DNS match and handshake speed earn points. Copy the ready <code>realitySettings</code> or apply it to your panel directly.</p></div>
+    </div>
+  </section>
+
+  <section id="features">
+    <h2 data-l="fa">امکانات</h2>
+    <h2 data-l="en">Features</h2>
+    <div class="grid three">
+      <div class="card"><div class="ico">🎯</div>
+        <h3 data-l="fa">مقصد نزدیک به سرور</h3><h3 data-l="en">A target close to your server</h3>
+        <p data-l="fa">مقصدی که در همان شبکهٔ سرور است ترافیک طبیعی‌تری می‌سازد و تأخیر اضافه ندارد. اطلاعات سرور (AS، prefix) از RIPEstat می‌آید.</p>
+        <p data-l="en">A target in your server's own network looks more natural and adds no latency. Server facts (AS, prefix) come from RIPEstat.</p></div>
+      <div class="card"><div class="ico">🚦</div>
+        <h3 data-l="fa">فیلتر روی اینترنت شما</h3><h3 data-l="en">Filtering on your internet</h3>
+        <p data-l="fa">برنامه روی گوشی یا کامپیوتر شما، روی همان اینترنتی که کاربرانتان دارند اجرا می‌شود؛ پس نتیجهٔ فیلتر واقعی است، نه حدس.</p>
+        <p data-l="en">It runs on your phone or PC, on the same internet your users have, so the filter result is real, not a guess.</p></div>
+      <div class="card"><div class="ico">🛰️</div>
+        <h3 data-l="fa">پنل 3x-ui و Hiddify</h3><h3 data-l="en">3x-ui and Hiddify panels</h3>
+        <p data-l="fa">inboundهای REALITY را از پنل می‌خواند، dest فعلی را تست می‌کند و مقصد جدید را با یک کلیک روی 3x-ui می‌نویسد؛ با دکمهٔ برگرداندن.</p>
+        <p data-l="en">Loads the REALITY inbounds from your panel, tests the current dest and writes a new target to 3x-ui in one click, with an undo button.</p></div>
+      <div class="card"><div class="ico">☁️</div>
+        <h3 data-l="fa">تشخیص CDN و DNS</h3><h3 data-l="en">CDN and DNS checks</h3>
+        <p data-l="fa">اسم‌هایی که پشت CDN هستند یا DNSشان به IP دیگری می‌رود مشخص می‌شوند تا مقصد پایدار انتخاب کنید.</p>
+        <p data-l="en">Names behind a CDN, or whose DNS points somewhere else, are marked so you can pick a stable target.</p></div>
+      <div class="card"><div class="ico">🔔</div>
+        <h3 data-l="fa">آپدیت خودکار</h3><h3 data-l="en">Update check</h3>
+        <p data-l="fa">نسخهٔ جدید که بیاید، برنامه خبر می‌دهد (روی اندروید با اعلان)، با لیست تغییرات و دکمهٔ دانلود.</p>
+        <p data-l="en">When a new build is out the app tells you (with a notification on Android), with the list of changes and a download button.</p></div>
+      <div class="card"><div class="ico">🔒</div>
+        <h3 data-l="fa">محلی و امن</h3><h3 data-l="en">Local and private</h3>
+        <p data-l="fa">همه‌چیز روی دستگاه خودتان اجرا می‌شود. رمز پنل ذخیره نمی‌شود و فقط برای همان درخواست به پنل خودتان فرستاده می‌شود.</p>
+        <p data-l="en">Everything runs on your device. The panel password is not stored and only goes to your own panel, for that request.</p></div>
+    </div>
+  </section>
+
+  <section id="panels">
+    <h2 data-l="fa">کار با پنل</h2>
+    <h2 data-l="en">Working with your panel</h2>
+    <div class="cols">
+      <div class="card">
+        <h3>3x-ui (Sanaei)</h3>
+        <ol class="steps" data-l="fa">
+          <li>در مرحلهٔ ۲ «از پنل من» را بزنید، آدرس پنل (با مسیر مخفی) و نام کاربری و رمز، یا توکن API را بدهید.</li>
+          <li>inbound را انتخاب کنید؛ IP سرور و پورت خودکار پر می‌شوند. «تست dest فعلی» نشان می‌دهد مقصد فعلی هنوز باز است یا نه.</li>
+          <li>اسکن کنید، یک ردیف را انتخاب کنید و «اعمال روی inbound» را بزنید. فقط dest و serverNames عوض می‌شوند؛ کلیدها، short idها و کلاینت‌ها دست نمی‌خورند.</li>
+        </ol>
+        <ol class="steps" data-l="en">
+          <li>In step 2 choose “From my panel” and give the panel address (with its secret path) and user name + password, or an API token.</li>
+          <li>Pick the inbound; the server IP and port fill in. “Test the current dest” shows whether today's target is still open.</li>
+          <li>Scan, pick a row and press “Apply to inbound”. Only dest and serverNames change; keys, short IDs and clients stay.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <h3>Hiddify</h3>
+        <p data-l="fa">لینک کامل ادمین (با uuid) را بدهید. دامنه‌های REALITY پنل خوانده و تست می‌شوند. اعمال خودکار فعلاً فقط برای 3x-ui است؛ در هیدیفای اسم را دستی به‌عنوان دامنهٔ REALITY اضافه کنید.</p>
+        <p data-l="en">Give the full admin link (with the uuid). The panel's REALITY domains are loaded and tested. Automatic apply is 3x-ui only for now; in Hiddify add the name as a REALITY domain by hand.</p>
+        <pre class="cmd">"realitySettings": {
+  "dest": "github-debug.com:443",
+  "serverNames": ["github-debug.com"]
+}</pre>
+        <p class="small" data-l="fa">همین بلوک را برنامه برای ردیف انتخاب‌شده آماده می‌کند.</p>
+        <p class="small" data-l="en">The app builds this block for the row you pick.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="run">
+    <h2 data-l="fa">نحوهٔ اجرا</h2>
+    <h2 data-l="en">How to run</h2>
+    <div class="cols">
+      <div class="card">
+        <h3 data-l="fa">ویندوز</h3><h3 data-l="en">Windows</h3>
+        <ol class="steps" data-l="fa">
+          <li><a href="https://github.com/Plus98ir/Reality-Scanner/releases/latest/download/Reality-Scanner.exe">Reality-Scanner.exe</a> را دانلود کنید و رویش دوبار کلیک کنید. پایتون لازم نیست.</li>
+          <li>صفحهٔ برنامه در مرورگر باز می‌شود. IP سرور و پورت REALITY را بدهید و <b>شروع اسکن</b> را بزنید.</li>
+          <li>با بستن صفحه، برنامه هم خودش بسته می‌شود.</li>
+        </ol>
+        <ol class="steps" data-l="en">
+          <li>Download <a href="https://github.com/Plus98ir/Reality-Scanner/releases/latest/download/Reality-Scanner.exe">Reality-Scanner.exe</a> and double-click it. No Python needed.</li>
+          <li>The app opens in your browser. Enter your server IP and REALITY port and press <b>Start scan</b>.</li>
+          <li>Close the page and the program exits by itself.</li>
+        </ol>
+        <div class="note" data-l="fa">اگر ویندوز هشدار داد («Windows protected your PC»)، روی More info و بعد Run anyway بزنید؛ این هشدار برای همهٔ برنامه‌های بدون امضای دیجیتال می‌آید.</div>
+        <div class="note" data-l="en">If Windows warns (“Windows protected your PC”), click More info → Run anyway; every program without a code signature gets this warning.</div>
+      </div>
+      <div class="card">
+        <h3 data-l="fa">اندروید</h3><h3 data-l="en">Android</h3>
+        <ol class="steps" data-l="fa">
+          <li><a href="https://github.com/Plus98ir/Reality-Scanner/releases/latest/download/Reality-Scanner.apk">Reality-Scanner.apk</a> را دانلود و نصب کنید (اجازهٔ «نصب از منابع ناشناس» را بدهید).</li>
+          <li>برنامه را باز کنید؛ اگر اجازهٔ اعلان خواست، Allow بزنید تا آپدیت‌ها را خبر بدهد.</li>
+          <li>گوشی مستقیم روی اینترنت سیم‌کارت است: برای مقایسهٔ اپراتورها فقط سیم‌کارت را عوض کنید.</li>
+        </ol>
+        <ol class="steps" data-l="en">
+          <li>Download and install <a href="https://github.com/Plus98ir/Reality-Scanner/releases/latest/download/Reality-Scanner.apk">Reality-Scanner.apk</a> (allow “install unknown apps”).</li>
+          <li>Open it; allow notifications so it can tell you about updates.</li>
+          <li>The phone is on its SIM's internet directly: to compare ISPs just switch SIM.</li>
+        </ol>
+        <div class="note" data-l="fa">قبل از اسکن <b>فیلترشکن را خاموش کنید</b>؛ وگرنه فیلترشکن تست می‌شود، نه اینترنت شما. اگر پنل بدون فیلترشکن باز نمی‌شود، یک بار با فیلترشکن بخوانیدش و بعد خاموشش کنید.</div>
+        <div class="note" data-l="en"><b>Turn off your VPN</b> before scanning, otherwise you test the VPN, not your ISP. If the panel only opens with the VPN, load it once with the VPN on, then turn it off.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 data-l="fa">امتیاز چطور حساب می‌شود؟</h2>
+    <h2 data-l="en">How the score works</h2>
+    <div class="card tablewrap">
+      <table>
+        <thead><tr><th data-l="fa">معیار</th><th data-l="en">Check</th><th data-l="fa">امتیاز</th><th data-l="en">Points</th></tr></thead>
+        <tbody>
+          <tr><td><span data-l="fa">روی اینترنت شما باز است (تست‌نشده: ۱۲)</span><span data-l="en">Open on your internet (not tested: 12)</span></td><td><b>30</b></td></tr>
+          <tr><td><span data-l="fa">همان <bdi dir="ltr">/24</bdi> سرور (همان AS: ۱۵)</span><span data-l="en">Same <bdi dir="ltr">/24</bdi> as the server (same AS: 15)</span></td><td><b>25</b></td></tr>
+          <tr><td><span data-l="fa">پشت CDN نیست</span><span data-l="en">Not behind a CDN</span></td><td><b>15</b></td></tr>
+          <tr><td><span data-l="fa">DNS اسم به همان IP می‌رسد</span><span data-l="en">The name's DNS points to that IP</span></td><td><b>15</b></td></tr>
+          <tr><td><span data-l="fa">سرعت هندشیک</span><span data-l="en">Handshake speed</span></td><td><b>15</b></td></tr>
+        </tbody>
+      </table>
+      <p class="small" data-l="fa">مقصد فیلترشده حداکثر ۲۰ امتیاز می‌گیرد.</p>
+      <p class="small" data-l="en">A filtered target gets at most 20.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2 data-l="fa">سؤال‌های رایج</h2>
+    <h2 data-l="en">FAQ</h2>
+    <div class="grid three">
+      <div class="card">
+        <h3 data-l="fa">چرا روی سرور اجرا نمی‌شود؟</h3><h3 data-l="en">Why not run it on the server?</h3>
+        <p data-l="fa">فیلتر روی مسیر اینترنت کاربر اتفاق می‌افتد، نه روی سرور. فقط از اینترنت خود شما می‌شود فهمید یک SNI قطع می‌شود یا نه.</p>
+        <p data-l="en">Filtering happens on your users' internet path, not on the server. Only your own internet can tell whether an SNI gets cut.</p></div>
+      <div class="card">
+        <h3 data-l="fa">همه «فیلتر» شدند!</h3><h3 data-l="en">Everything shows filtered!</h3>
+        <p data-l="fa">اگر جلوی پورت REALITY یک SNI router (nginx، haproxy، پراکسی DNS) باشد که فقط اسم‌های شناخته‌شده را رد می‌کند، تست فیلتر غلط می‌شود. inbound را از پنل بخوانید تا برنامه این را تشخیص دهد، یا پورت را ۰ بگذارید.</p>
+        <p data-l="en">If an SNI router (nginx, haproxy, a DNS proxy) in front of the REALITY port only passes names it knows, the filter test is wrong. Load the inbound from your panel so the app can spot it, or set the port to 0.</p></div>
+      <div class="card">
+        <h3 data-l="fa">روی اندروید روت لازم دارد؟</h3><h3 data-l="en">Does Android need root?</h3>
+        <p data-l="fa">نه. APK مثل هر برنامهٔ دیگری نصب می‌شود و همان صفحه را داخل خودش اجرا می‌کند. فایل‌های CSV و JSON در پوشهٔ Download ذخیره می‌شوند.</p>
+        <p data-l="en">No. The APK installs like any app and runs the same page inside it. CSV and JSON files are saved to your Download folder.</p></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <span>Reality Scanner</span>
+  <a href="https://github.com/Plus98ir/Reality-Scanner">GitHub</a>
+  <a href="https://github.com/Plus98ir/Reality-Scanner/releases/latest"><span data-l="fa">آخرین نسخه</span><span data-l="en">Latest release</span></a>
+  <a href="https://plus98ir.dpdns.org/"><span data-l="fa">پروژه‌های دیگر</span><span data-l="en">More projects</span></a>
+</footer>
+
+<script>
+(function () {
+  var q = new URLSearchParams(location.search).get('lang'), saved;
+  try { saved = localStorage.getItem('rscan.site.lang'); } catch (e) {}
+  var lang = q === 'en' || q === 'fa' ? q : saved || ((navigator.language || '').indexOf('fa') === 0 ? 'fa' : 'en');
+  function apply(l) {
+    lang = l;
+    document.documentElement.lang = l;
+    document.documentElement.dir = l === 'fa' ? 'rtl' : 'ltr';
+    document.querySelectorAll('[data-lang]').forEach(function (b) { b.classList.toggle('on', b.dataset.lang === l); });
+    try { localStorage.setItem('rscan.site.lang', l); } catch (e) {}
+  }
+  document.querySelectorAll('[data-lang]').forEach(function (b) { b.onclick = function () { apply(b.dataset.lang); }; });
+  apply(lang);
+})();
+</script>
+</body>
+</html>
