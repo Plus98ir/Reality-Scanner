@@ -2,6 +2,9 @@
 
 # Reality Scanner
 
+
+<p align="center"><a href="https://hits.sh/github.com/Plus98ir/Reality-Scanner/"><img src="https://hits.sh/github.com/Plus98ir/Reality-Scanner.svg?style=for-the-badge&label=views&color=2563eb" alt="Views"></a> <a href="https://corenetbase.com/#support"><img src="https://img.shields.io/badge/support-buy%20me%20a%20coffee-e11d2a?style=for-the-badge&logo=buymeacoffee&logoColor=white" alt="Support"></a></p>
+
 Finds good **Xray REALITY** targets (`dest` / `serverNames`) for your server, and checks that they are open on **your own internet**.
 
 You run it on your PC or phone, on the same internet your users have (VPN off). Enter your server's IP and REALITY port, press **Start scan**:
