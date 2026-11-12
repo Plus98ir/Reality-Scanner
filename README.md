@@ -19,28 +19,17 @@ TA53aFyGNfSAcrCaJi9QmA9x5W47nPJcf7
 
 </details>
 
-<details>
-<summary><b>🇮🇷 فارسی</b></summary>
+<div align="center">
 
-<div dir="rtl">
-
-**Reality Scanner** برای سرور Xray شما مقصد مناسب REALITY (یعنی `dest` و `serverNames`) پیدا می‌کند و چک می‌کند که روی **اینترنت خود شما** فیلتر نباشد.
-
-برنامه را روی کامپیوتر یا گوشی، با همان اینترنتی که کاربرانتان دارند و با VPN خاموش اجرا کنید. IP سرور و پورت REALITY را بدهید و **شروع اسکن** را بزنید:
-
-۱. گواهی IPهای کنار سرور را می‌خواند و اسم سایت‌ها را از آن درمی‌آورد.
-۲. هر اسم را مثل Xray چک می‌کند: TLS 1.3، X25519، HTTP/2 و گواهی معتبر.
-۳. اسم را به‌عنوان SNI از اینترنت شما به سرور خودتان می‌فرستد. اگر اپراتور قطعش کند، **فیلتر** علامت می‌خورد.
-۴. به بقیه امتیاز می‌دهد و یک `realitySettings` آماده برای کپی تحویل می‌دهد.
-
-دانلود: [ویندوز (exe)](https://github.com/Plus98ir/Reality-Scanner/releases/latest/download/Reality-Scanner.exe) · [اندروید (apk)](https://github.com/Plus98ir/Reality-Scanner/releases/latest/download/Reality-Scanner.apk)
+[🇬🇧 English](#english) | [🇮🇷 فارسی](#persian)
 
 </div>
 
-</details>
+---
 
-<details open>
-<summary><b>🇺🇸 English</b></summary>
+<a name="english"></a>
+
+## 🇬🇧 English
 
 Finds good **Xray REALITY** targets (`dest` / `serverNames`) for your server, and checks that they are open on **your own internet**.
 
@@ -62,4 +51,29 @@ You can also check your own list of domains instead of scanning IPs.
 
 The app tells you when a new build is out.
 
-</details>
+---
+
+<a name="persian"></a>
+
+## 🇮🇷 فارسی
+
+<div align="center">
+
+[🇬🇧 English](#english) | [🇮🇷 فارسی](#persian)
+
+</div>
+
+<div dir="rtl">
+
+**Reality Scanner** برای سرور Xray شما مقصد مناسب REALITY (یعنی `dest` و `serverNames`) پیدا می‌کند و چک می‌کند که روی **اینترنت خود شما** فیلتر نباشد.
+
+برنامه را روی کامپیوتر یا گوشی، با همان اینترنتی که کاربرانتان دارند و با VPN خاموش اجرا کنید. IP سرور و پورت REALITY را بدهید و **شروع اسکن** را بزنید:
+
+۱. گواهی IPهای کنار سرور را می‌خواند و اسم سایت‌ها را از آن درمی‌آورد.
+۲. هر اسم را مثل Xray چک می‌کند: TLS 1.3، X25519، HTTP/2 و گواهی معتبر.
+۳. اسم را به‌عنوان SNI از اینترنت شما به سرور خودتان می‌فرستد. اگر اپراتور قطعش کند، **فیلتر** علامت می‌خورد.
+۴. به بقیه امتیاز می‌دهد و یک `realitySettings` آماده برای کپی تحویل می‌دهد.
+
+دانلود: [ویندوز (exe)](https://github.com/Plus98ir/Reality-Scanner/releases/latest/download/Reality-Scanner.exe) · [اندروید (apk)](https://github.com/Plus98ir/Reality-Scanner/releases/latest/download/Reality-Scanner.apk)
+
+</div>
