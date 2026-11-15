@@ -1,10 +1,10 @@
 {
-  "version": "1.0",
-  "build": 9,
+  "version": "1.1",
+  "build": 10,
   "files": [
     "Reality-Scanner.exe",
-    "Reality-Scanner-v1.0-build9.exe",
+    "Reality-Scanner-v1.1-build10.exe",
     "Reality-Scanner.apk",
-    "Reality-Scanner-v1.0-build9.apk"
+    "Reality-Scanner-v1.1-build10.apk"
   ]
 }
