@@ -35,8 +35,8 @@ You can also check your own list of domains instead of scanning IPs.
 
 | Platform | File |
 |---|---|
-| Windows 10/11 | [Reality-Scanner.exe](https://github.com/Plus98ir/Reality-Scanner/releases/latest/download/Reality-Scanner.exe) — no Python needed |
-| Android 7+ | [Reality-Scanner.apk](https://github.com/Plus98ir/Reality-Scanner/releases/latest/download/Reality-Scanner.apk) |
+| Windows 10/11 | [Reality-Scanner.exe](https://corenetbase.com/Reality-Scanner/dl/Reality-Scanner.exe) — no Python needed |
+| Android 7+ | [Reality-Scanner.apk](https://corenetbase.com/Reality-Scanner/dl/Reality-Scanner.apk) |
 
 The app tells you when a new build is out.
 
@@ -55,6 +55,6 @@ The app tells you when a new build is out.
 ۳. اسم را به‌عنوان SNI از اینترنت شما به سرور خودتان می‌فرستد. اگر اپراتور قطعش کند، **فیلتر** علامت می‌خورد.
 ۴. به بقیه امتیاز می‌دهد و یک `realitySettings` آماده برای کپی تحویل می‌دهد.
 
-دانلود: [ویندوز (exe)](https://github.com/Plus98ir/Reality-Scanner/releases/latest/download/Reality-Scanner.exe) · [اندروید (apk)](https://github.com/Plus98ir/Reality-Scanner/releases/latest/download/Reality-Scanner.apk)
+دانلود: [ویندوز (exe)](https://corenetbase.com/Reality-Scanner/dl/Reality-Scanner.exe) · [اندروید (apk)](https://corenetbase.com/Reality-Scanner/dl/Reality-Scanner.apk)
 
 </div>

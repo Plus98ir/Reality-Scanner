@@ -133,9 +133,9 @@ html:not([lang="fa"]) [data-l="fa"], html:not([lang="en"]) [data-l="en"] { displ
       <p data-l="fa">Reality Scanner سایت‌های کنار سرور Xray شما را پیدا می‌کند، هر کدام را مثل خود Xray چک می‌کند (TLS 1.3، X25519، HTTP/2، گواهی معتبر) و می‌سنجد که اپراتور شما SNI آن را قطع نمی‌کند. بهترین‌ها را امتیاز می‌دهد و با یک کلیک در inbound پنل 3x-ui می‌نشاند.</p>
       <p data-l="en">Reality Scanner finds the sites next to your Xray server, checks each one the way Xray does (TLS 1.3, X25519, HTTP/2, a valid certificate) and tests that your ISP doesn't cut its SNI. It scores the best ones and puts your pick into a 3x-ui inbound in one click.</p>
       <div class="btns">
-        <a class="btn primary" href="https://github.com/Plus98ir/Reality-Scanner/releases/latest/download/Reality-Scanner.exe">
+        <a class="btn primary" href="dl/Reality-Scanner.exe">
           ⬇ <span data-l="fa">ویندوز (exe)</span><span data-l="en">Windows (exe)</span></a>
-        <a class="btn primary" href="https://github.com/Plus98ir/Reality-Scanner/releases/latest/download/Reality-Scanner.apk">
+        <a class="btn primary" href="dl/Reality-Scanner.apk">
           ⬇ <span data-l="fa">اندروید (APK)</span><span data-l="en">Android (APK)</span></a>
         <a class="btn" href="#run"><span data-l="fa">نحوهٔ اجرا</span><span data-l="en">How to run</span></a>
       </div>
@@ -250,12 +250,12 @@ html:not([lang="fa"]) [data-l="fa"], html:not([lang="en"]) [data-l="en"] { displ
       <div class="card">
         <h3 data-l="fa">ویندوز</h3><h3 data-l="en">Windows</h3>
         <ol class="steps" data-l="fa">
-          <li><a href="https://github.com/Plus98ir/Reality-Scanner/releases/latest/download/Reality-Scanner.exe">Reality-Scanner.exe</a> را دانلود کنید و رویش دوبار کلیک کنید. پایتون لازم نیست.</li>
+          <li><a href="dl/Reality-Scanner.exe">Reality-Scanner.exe</a> را دانلود کنید و رویش دوبار کلیک کنید. پایتون لازم نیست.</li>
           <li>صفحهٔ برنامه در مرورگر باز می‌شود. IP سرور و پورت REALITY را بدهید و <b>شروع اسکن</b> را بزنید.</li>
           <li>با بستن صفحه، برنامه هم خودش بسته می‌شود.</li>
         </ol>
         <ol class="steps" data-l="en">
-          <li>Download <a href="https://github.com/Plus98ir/Reality-Scanner/releases/latest/download/Reality-Scanner.exe">Reality-Scanner.exe</a> and double-click it. No Python needed.</li>
+          <li>Download <a href="dl/Reality-Scanner.exe">Reality-Scanner.exe</a> and double-click it. No Python needed.</li>
           <li>The app opens in your browser. Enter your server IP and REALITY port and press <b>Start scan</b>.</li>
           <li>Close the page and the program exits by itself.</li>
         </ol>
@@ -265,12 +265,12 @@ html:not([lang="fa"]) [data-l="fa"], html:not([lang="en"]) [data-l="en"] { displ
       <div class="card">
         <h3 data-l="fa">اندروید</h3><h3 data-l="en">Android</h3>
         <ol class="steps" data-l="fa">
-          <li><a href="https://github.com/Plus98ir/Reality-Scanner/releases/latest/download/Reality-Scanner.apk">Reality-Scanner.apk</a> را دانلود و نصب کنید (اجازهٔ «نصب از منابع ناشناس» را بدهید).</li>
+          <li><a href="dl/Reality-Scanner.apk">Reality-Scanner.apk</a> را دانلود و نصب کنید (اجازهٔ «نصب از منابع ناشناس» را بدهید).</li>
           <li>برنامه را باز کنید؛ اگر اجازهٔ اعلان خواست، Allow بزنید تا آپدیت‌ها را خبر بدهد.</li>
           <li>گوشی مستقیم روی اینترنت سیم‌کارت است: برای مقایسهٔ اپراتورها فقط سیم‌کارت را عوض کنید.</li>
         </ol>
         <ol class="steps" data-l="en">
-          <li>Download and install <a href="https://github.com/Plus98ir/Reality-Scanner/releases/latest/download/Reality-Scanner.apk">Reality-Scanner.apk</a> (allow “install unknown apps”).</li>
+          <li>Download and install <a href="dl/Reality-Scanner.apk">Reality-Scanner.apk</a> (allow “install unknown apps”).</li>
           <li>Open it; allow notifications so it can tell you about updates.</li>
           <li>The phone is on its SIM's internet directly: to compare ISPs just switch SIM.</li>
         </ol>
@@ -344,12 +344,11 @@ html:not([lang="fa"]) [data-l="fa"], html:not([lang="en"]) [data-l="en"] { displ
 </script>
 <script>
 // Download links follow the newest build: the versioned file (App-v1.3-build33.exe) and
-// "v1.3 build 33" on the buttons. latest.json sits next to this page (CI writes it), since
-// api.github.com is filtered in Iran; that API is only the fallback. Without both, fixed links stay.
+// "v1.3 build 33" on the buttons. Files, latest.json and version.json all come from this site
+// (dl/), since GitHub's file host and api.github.com are blocked in Iran. Else fixed links stay.
 (function () {
-  var links = document.querySelectorAll('a[href*="/releases/latest/download/"]');
+  var links = document.querySelectorAll('a[href^="dl/"]');
   if (!links.length) return;
-  var parts = links[0].href.split('/');
   function json(url) {
     return fetch(url, { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : Promise.reject(); });
   }
@@ -377,8 +376,7 @@ html:not([lang="fa"]) [data-l="fa"], html:not([lang="en"]) [data-l="en"] { displ
   json('latest.json')
     .then(function (d) { return d.files; })
     .catch(function () {
-      return json('https://api.github.com/repos/' + parts[3] + '/' + parts[4] + '/releases/latest')
-        .then(function (rel) { return (rel.assets || []).map(function (a) { return a.name; }); });
+      return json('dl/version.json').then(function (d) { return d.files; });
     })
     .then(function (names) { if (names) apply(names); })
     .catch(function () {});
