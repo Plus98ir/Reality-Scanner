@@ -38,6 +38,8 @@ You can also check your own list of domains instead of scanning IPs.
 | Windows 10/11 | [Reality-Scanner.exe](https://corenetbase.com/Reality-Scanner/dl/Reality-Scanner.exe) — no Python needed |
 | Android 7+ | [Reality-Scanner.apk](https://corenetbase.com/Reality-Scanner/dl/Reality-Scanner.apk) |
 
+> **Why does Google offer to scan the app?** This app isn't installed from Google Play, so Google doesn't know it yet and offers to check it before install. This happens with every app published outside Play. It's your choice: if you tap **Scan app**, Google checks the file itself and shows you the result.
+
 The app tells you when a new build is out.
 
 ---
@@ -56,5 +58,7 @@ The app tells you when a new build is out.
 ۴. به بقیه امتیاز می‌دهد و یک `realitySettings` آماده برای کپی تحویل می‌دهد.
 
 دانلود: [ویندوز (exe)](https://corenetbase.com/Reality-Scanner/dl/Reality-Scanner.exe) · [اندروید (apk)](https://corenetbase.com/Reality-Scanner/dl/Reality-Scanner.apk)
+
+> **چرا موقع نصب، گوگل پیشنهاد اسکن می‌دهد؟** این برنامه از Google Play نصب نمی‌شود، برای همین گوگل هنوز آن را نمی‌شناسد و پیشنهاد می‌دهد قبل از نصب بررسی‌اش کند. این پیغام برای همهٔ برنامه‌هایی که بیرون از Play منتشر می‌شوند می‌آید. انتخاب با شماست؛ اگر **Scan app** را بزنید، خود گوگل فایل را بررسی می‌کند و نتیجه را به شما نشان می‌دهد.
 
 </div>
